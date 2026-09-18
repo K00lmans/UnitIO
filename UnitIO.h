@@ -31,17 +31,27 @@ namespace UnitIO {
     namespace Theoretical = mp_units::natural; // Units related to theoretical physics
     namespace Binary = mp_units::iec; // Data size units
 
-    // Standard units for coolprop
-    using mp_units::si::kelvin;
-    using mp_units::si::pascal;
-    using mp_units::si::kilogram;
-    using mp_units::si::joule;
-    using mp_units::si::mole;
-    inline constexpr auto meter = mp_units::si::metre;
-    inline constexpr auto cubic_meter = mp_units::si::unit_symbols::m3;
+    // Standard units for coolprop. For reasons beyond me, the compound units show errors in my IDE despite compiling
+    // just fine. If you can fix it, amazing, otherwise just ignore it for your own sanity.
+    using SI::kelvin;
+    using SI::pascal;
+    using SI::kilogram;
+    using SI::joule;
+    using SI::mole;
+    using SI::second;
+    using SI::watt;
+    using SI::newton;
+    inline constexpr auto meter = SI::metre;
+    inline constexpr auto cubic_meter = SI::unit_symbols::m3;
     inline constexpr auto kg_per_cubic_meter = kilogram / cubic_meter;
     inline constexpr auto joule_per_kilogram = joule / kilogram;
-    inline constexpr auto joule_per_mole = joule / mole;
+    inline constexpr auto joule_per_kilogram_kelvin = joule_per_kilogram / kelvin;
+    inline constexpr auto joule_per_mole_kelvin = joule / mole / kelvin;
+    inline constexpr auto pascal_seconds = pascal * second;
+    inline constexpr auto watt_per_meter_kelvin = watt / meter / kelvin;
+    inline constexpr auto newton_per_meter = newton / meter;
+    inline constexpr auto meter_per_second = meter / second;
+    inline constexpr auto kilogram_per_kilomole = kilogram / mp_units::si::kilo<mole>;
 }
 
 class Units {
