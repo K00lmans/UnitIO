@@ -51,7 +51,8 @@ namespace UnitIO {
     inline constexpr auto watt_per_meter_kelvin = watt / meter / kelvin;
     inline constexpr auto newton_per_meter = newton / meter;
     inline constexpr auto meter_per_second = meter / second;
-    inline constexpr auto kilogram_per_kilomole = kilogram / mp_units::si::kilo<mole>;
+    inline constexpr auto kilomole = SI::unit_symbols::kmol;
+    inline constexpr auto kilogram_per_kilomole = kilogram / kilomole;
 }
 
 class Units {
