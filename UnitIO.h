@@ -14,6 +14,8 @@
 #include <mp-units/systems/natural.h>
 #include <mp-units/systems/iec.h>
 
+namespace mp = mp_units;
+
 namespace UnitIO {
     // Required to function for this library
     using mp_units::Quantity;
@@ -55,7 +57,10 @@ namespace UnitIO {
     inline constexpr auto kilogram_per_kilomole = kilogram / kilomole;
 }
 
-class Units {
+template<mp_units::Reference auto INPUT_UNIT, mp_units::Reference auto OUTPUT_UNIT>
+class Smart_Units {
+    mp_units::quantity<INPUT_UNIT> input_value;
+    mp_units::quantity<OUTPUT_UNIT> output_unit;
 };
 
 #endif // UNITIO_LIBRARY_H
