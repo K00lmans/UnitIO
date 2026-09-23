@@ -1,9 +1,9 @@
 {
   "name" : "unitio",
   "version-string" : "1.0.0",
-  "builtin-baseline" : "a1cae005c39be7b18ba319fced856b68d7276271",
+  "builtin-baseline" : "5321e3e9a888b2aaf0369e0aef18bc9120fbccde",
   "dependencies" : [ {
-    "name" : "mp-units",
-    "version>=" : "2.5.0"
+    "name" : "llnl-units",
+    "version>=" : "0.13.1#1"
   } ]
 }
