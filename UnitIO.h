@@ -3,6 +3,7 @@
 
 #include <llnl-units/units.hpp>
 #include <unordered_map>
+#include <utility>
 
 #include "UnitIO.h"
 
@@ -35,14 +36,24 @@ namespace UnitIO {
         inline constexpr auto &kilometer = Units::km;
         inline constexpr auto &centimeter = Units::cm;
         inline constexpr auto &bar = Units::bar;
-    };
+    }
     namespace Customary = Units::us; // US customary system
+    namespace Time = Units::time;
+    namespace Imperial = Units::imp;
+    namespace Nautical = Units::nautical;
+    namespace Temperature = Units::temperature;
+    namespace Typography = Units::typographic::dtp;
+    namespace Pressure = Units::pressure;
+    namespace Energy = Units::energy;
+    namespace Data = Units::data;
 
     // Commonly used units
     inline constexpr auto &meter = Units::meter;
-}
+    inline constexpr auto &horsepower = Units::hp;
 
-inline static const std::unordered_map<units::detail::unit_data, units::precise_unit> Default_Units = {};
+    // Default Units
+    inline static const std::unordered_map<units::detail::unit_data, units::precise_unit> Default_Units = {};
+}
 
 class Smart_Unit_Container {
     units::precise_measurement input_value;
@@ -54,6 +65,18 @@ public:
     Smart_Unit_Container(double value, units::precise_unit input_unit, units::precise_unit output_unit);
 
     ~Smart_Unit_Container() = default;
+
+    [[nodiscard]] double get_value() const { return output_value.value(); }
+
+    [[nodiscard]] double get_value_as(const units::precise_unit unit) const {
+        return output_value.value_as(unit);
+    }
+
+    [[nodiscard]] std::pair<units::precise_unit, units::precise_unit> get_units() const {
+        return {input_value.as_unit(), output_value.as_unit()};
+    }
+
+    void convert_to(units::precise_unit unit);
 };
 
 #endif // UNITIO_LIBRARY_H
