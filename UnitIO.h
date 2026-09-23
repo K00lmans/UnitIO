@@ -4,6 +4,8 @@
 #include <llnl-units/units.hpp>
 #include <unordered_map>
 #include <utility>
+#include <string>
+#include <stdexcept>
 
 #include "UnitIO.h"
 
@@ -37,15 +39,16 @@ namespace UnitIO {
         inline constexpr auto &centimeter = Units::cm;
         inline constexpr auto &bar = Units::bar;
     }
+
     namespace Customary = Units::us; // US customary system
     namespace Time = Units::time;
-    namespace Imperial = Units::imp;
+    namespace Imperial = Units::imp; // British imperial units
     namespace Nautical = Units::nautical;
     namespace Temperature = Units::temperature;
-    namespace Typography = Units::typographic::dtp;
+    namespace Typography = Units::typographic::dtp; // Units related to font and typography
     namespace Pressure = Units::pressure;
-    namespace Energy = Units::energy;
-    namespace Data = Units::data;
+    namespace Energy = Units::energy; // Measures of electricity and power
+    namespace Data = Units::data; // File size units
 
     // Commonly used units
     inline constexpr auto &meter = Units::meter;
@@ -58,6 +61,18 @@ namespace UnitIO {
 class Smart_Unit_Container {
     units::precise_measurement input_value;
     units::precise_measurement output_value;
+
+    // Library runtime errors
+    static void raise_conversion_error(const std::string &unit_1, const std::string &unit_2) {
+        throw std::runtime_error("An attempt to convert from " + unit_1 + " to " + unit_2 + " failed.");
+    }
+
+    static void raise_computation_error(const std::string &unit_1, const std::string &unit_2,
+                                        const std::string &operation) {
+        throw std::runtime_error(
+            "An attempt to perform the operation " + operation + " between units " + unit_1 + " and " + unit_2 +
+            " failed.");
+    }
 
 public:
     Smart_Unit_Container(double value, units::precise_unit unit);
