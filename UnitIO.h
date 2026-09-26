@@ -92,6 +92,58 @@ public:
     }
 
     void convert_to(units::precise_unit unit);
+
+    template<std::convertible_to<double> NUM>
+    Smart_Unit_Container operator+(NUM rhs) {
+        input_value = input_value + units::precise_measurement(rhs, input_value.as_unit());
+        output_value = input_value.convert_to(output_value.as_unit());
+        return *this;
+    }
+
+    template<std::convertible_to<double> NUM>
+    Smart_Unit_Container operator-(NUM rhs) {
+        input_value = input_value - units::precise_measurement(rhs, input_value.as_unit());
+        output_value = input_value.convert_to(output_value.as_unit());
+        return *this;
+    }
+
+    template<std::convertible_to<double> NUM>
+    Smart_Unit_Container operator*(NUM rhs) {
+        input_value = input_value * rhs;
+        output_value = input_value.convert_to(output_value.as_unit());
+        return *this;
+    }
+
+    template<std::convertible_to<double> NUM>
+    Smart_Unit_Container operator/(NUM rhs) {
+        input_value = input_value / rhs;
+        output_value = input_value.convert_to(output_value.as_unit());
+        return *this;
+    }
 };
+
+template<std::convertible_to<double> NUM>
+Smart_Unit_Container operator+(Smart_Unit_Container lhs, NUM rhs) {
+    auto result = lhs;
+    return result += rhs;
+}
+
+template<std::convertible_to<double> NUM>
+Smart_Unit_Container operator-(Smart_Unit_Container lhs, NUM rhs) {
+    auto result = lhs;
+    return result -= rhs;
+}
+
+template<std::convertible_to<double> NUM>
+Smart_Unit_Container operator*(Smart_Unit_Container lhs, NUM rhs) {
+    auto result = lhs;
+    return result *= rhs;
+}
+
+template<std::convertible_to<double> NUM>
+Smart_Unit_Container operator/(Smart_Unit_Container lhs, NUM rhs) {
+    auto result = lhs;
+    return result /= rhs;
+}
 
 #endif // UNITIO_LIBRARY_H
